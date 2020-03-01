@@ -51,6 +51,7 @@ function get_open_items($db){
   return get_items($db, true);
 }
 
+//validate_itemでバリデーション実行→regist_item_transactionで入力情報と画像情報をDBに入力処理する関数
 function regist_item($db, $name, $price, $stock, $status, $image){
   $filename = get_upload_filename($image);
   if(validate_item($name, $price, $stock, $filename, $status) === false){
@@ -71,6 +72,7 @@ function regist_item_transaction($db, $name, $price, $stock, $status, $image, $f
   
 }
 
+//入力情報をDBに追加する関数
 function insert_item($db, $name, $price, $stock, $filename, $status){
   $status_value = PERMITTED_ITEM_STATUSES[$status];
   $sql = "
