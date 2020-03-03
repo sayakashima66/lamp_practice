@@ -84,10 +84,11 @@ function insert_item($db, $name, $price, $stock, $filename, $status){
         image,
         status
       )
-    VALUES('{$name}', {$price}, {$stock}, '{$filename}', {$status_value});
+    VALUES(?, ?, ?, ?,?);
   ";
+$array=array($name, $price, $stock, $filename, $status_value);
 
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $array);
 }
 
 function update_item_status($db, $item_id, $status){
@@ -109,13 +110,13 @@ function update_item_stock($db, $item_id, $stock){
     UPDATE
       items
     SET
-      stock = {$stock}
+      stock = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
-  
-  return execute_query($db, $sql);
+  $array=array($stock, $item_id);
+  return execute_query($db, $sql, $array);
 }
 
 function destroy_item($db, $item_id){
