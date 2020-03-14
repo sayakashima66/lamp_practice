@@ -25,6 +25,7 @@ if (is_valid_csrf_token($token) === true) {
   } else {
     set_error('カートの更新に失敗しました。');
   }
+
 } else {
   set_error('トークンが不正です');
 }
