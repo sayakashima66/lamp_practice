@@ -54,14 +54,20 @@ function get_user_cart($db, $user_id, $item_id){
 
 }
 
+//カートに商品を追加する関数
 function add_cart($db, $user_id, $item_id ) {
+  //ユーザのカート内の同じitem_idのものを取得
   $cart = get_user_cart($db, $user_id, $item_id);
+  //もしまだ追加されていない商品なら、新規追加
   if($cart === false){
+    
     return insert_cart($db, $user_id, $item_id);
   }
+  //すでに入っている商品なら数量を+1
   return update_cart_amount($db, $cart['cart_id'], $cart['amount'] + 1);
 }
 
+//カートに新規商品を追加する関数
 function insert_cart($db, $user_id, $item_id, $amount = 1){
   $sql = "
     INSERT INTO
@@ -76,6 +82,7 @@ function insert_cart($db, $user_id, $item_id, $amount = 1){
   return execute_query($db, $sql);
 }
 
+//カート内の商品数を+1する関数
 function update_cart_amount($db, $cart_id, $amount){
   $sql = "
     UPDATE
