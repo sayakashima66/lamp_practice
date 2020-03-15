@@ -38,28 +38,65 @@ function add_purchase_details($db, $last_purchase_id, $carts)
 
         $purchase_item_id = $value["item_id"];
         $purchase_item_amount = $value["amount"];
+        $purchase_price = $value["price"];
 
-        insert_purchase_details($db, $last_purchase_id, $purchase_item_id, $purchase_item_amount);
+        insert_purchase_details($db, $last_purchase_id, $purchase_item_id, $purchase_item_amount, $purchase_price);
     }
 }
 
-function insert_purchase_details($db, $last_purchase_id, $purchase_item_id, $purchase_item_amount)
+function insert_purchase_details($db, $last_purchase_id, $purchase_item_id, $purchase_item_amount, $purchase_price)
 {
-    print "last_purchase_idは".$last_purchase_id."<br>";
-    var_dump($last_purchase_id);
-
     $sql = "
       INSERT INTO
       purchase_details(
           purchase_id,
           item_id,
-          item_amount
+          item_amount,
+          purchase_price
           )
-        VALUES({$last_purchase_id},{$purchase_item_id},{$purchase_item_amount})
+        VALUES({$last_purchase_id},{$purchase_item_id},{$purchase_item_amount},{$purchase_price})
         
         ";
 
     return execute_query($db, $sql);
 }
 
-//VALUES({$last_purchase_id}, {$purchase_item_id}, {$purchase_item_amount})
+
+function get_purchase_history($db, $user_id)
+{
+
+    $sql = "SELECT
+    purchase_id, total_price, purchase_datetime
+    FROM purchase_history
+    WHERE {$user_id} = user_id
+    ";
+
+    return fetch_all_query($db, $sql);
+}
+
+function get_all_purchase_history($db, $user_id)
+{
+
+    $sql = "SELECT *
+    FROM purchase_history
+    ";
+
+    return fetch_all_query($db, $sql);
+}
+
+function get_purchase_details($db, $purchase_id){
+    $sql = 
+    "SELECT
+    a.item_id,
+    a.item_amount,
+    a.purchase_price,
+    a.detail_datetime,
+    b.item_name
+    FROM purshase_details as a
+    join items as b
+    on a.item_id = b.item_id
+    where a.purchase_id = {$purchase_id}
+    ";
+
+    return fetch_all_query($db, $sql); 
+}
