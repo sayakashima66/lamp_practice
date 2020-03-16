@@ -209,3 +209,21 @@ function is_valid_item_status($status){
   }
   return $is_valid;
 }
+
+function get_ranking($db){
+  $sql = "SELECT
+  a.item_id,
+  a.name,
+  a.price,
+  a.image,
+  sum(b.item_amount)
+  FROM items as a
+  JOIN purchase_details as b
+  ON a.item_id = b.item_id
+  GROUP BY a.item_id
+  ORDER BY sum(b.item_amount) DESC
+  LIMIT 3";
+  
+return fetch_all_query($db, $sql);
+
+}
