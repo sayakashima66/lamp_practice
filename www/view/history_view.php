@@ -3,13 +3,13 @@
 
 <head>
   <?php include VIEW_PATH . 'templates/head.php'; ?>
-  <title>カート</title>
+  <title>購入履歴</title>
   <link rel="stylesheet" href="<?php print(STYLESHEET_PATH . 'history.css'); ?>">
 </head>
 
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
-  <h1>カート</h1>
+  <h1>購入履歴</h1>
   <div class="container">
 
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
@@ -38,7 +38,11 @@
               <td><?php print $value['purchase_datetime'] ?></td>
               <td>
                 <form method="post" action="purchase_details.php">
+                  <input type="hidden" value="<?php print($value['purchase_id']); ?>" name="purchase_id">
+                  <input type="hidden" value="<?php print($value['total_price']); ?>" name="total_price">
+                  <input type="hidden" value="<?php print($value['purchase_datetime']); ?>" name="purchase_datetime">
                   <input type="submit" value="詳細">
+                </form>
               </td>
             </tr>
           <?php } ?>

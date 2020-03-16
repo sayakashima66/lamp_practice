@@ -35,7 +35,7 @@ function fetch_all_query($db, $sql, $params = array()){
   }catch(PDOException $e){
     set_error('データ取得に失敗しました。');
   }
-  return false;
+  return $e;
 }
 
 function execute_query($db, $sql, $params = array()){

@@ -90,9 +90,9 @@ function get_purchase_details($db, $purchase_id){
     a.item_id,
     a.item_amount,
     a.purchase_price,
-    a.detail_datetime,
-    b.item_name
-    FROM purshase_details as a
+    a.details_datetime,
+    b.name
+    FROM purchase_details as a
     join items as b
     on a.item_id = b.item_id
     where a.purchase_id = {$purchase_id}
@@ -100,3 +100,4 @@ function get_purchase_details($db, $purchase_id){
 
     return fetch_all_query($db, $sql); 
 }
+
