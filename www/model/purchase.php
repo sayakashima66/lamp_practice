@@ -18,10 +18,12 @@ function insert_purchase_history($db, $user_id, $total_price)
           user_id,
           total_price
           )
-        VALUES({$user_id},{$total_price})
+        VALUES(?,?)
         ";
 
-    return execute_query($db, $sql);
+        $array = array($user_id, $total_price);
+
+    return execute_query($db, $sql, $array);
 }
 
 
@@ -54,11 +56,12 @@ function insert_purchase_details($db, $last_purchase_id, $purchase_item_id, $pur
           item_amount,
           purchase_price
           )
-        VALUES({$last_purchase_id},{$purchase_item_id},{$purchase_item_amount},{$purchase_price})
+        VALUES(?,?,?,?)
         
         ";
+    $array = array($last_purchase_id, $purchase_item_id, $purchase_item_amount, $purchase_price);
 
-    return execute_query($db, $sql);
+    return execute_query($db, $sql, $array);
 }
 
 

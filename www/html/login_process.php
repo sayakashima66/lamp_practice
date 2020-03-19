@@ -14,6 +14,8 @@ $password = get_post('password');
 
 $db = get_db_connect();
 
+$token = get_csrf_token();
+
 
 $user = login_as($db, $name, $password);
 if( $user === false){

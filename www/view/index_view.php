@@ -62,11 +62,15 @@
             <td><?php print(number_format($value['price'])); ?>円</td>
 
             <td>
-              <form action="index_add_cart.php" method="post">
-                <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
-                <input type="hidden" name="item_id" value="<?php print($value['item_id']); ?>">
-                <input type="hidden" name="token" value="<?php print($token); ?>">
-              </form>
+                <?php if ($value['stock'] > 0) { ?>
+                    <form action="index_add_cart.php" method="post">
+                      <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
+                      <input type="hidden" name="item_id" value="<?php print($value['item_id']); ?>">
+                      <input type="hidden" name="token" value="<?php print($token); ?>">
+                    </form>
+                  <?php } else { ?>
+                    <p class="text-danger">現在売り切れです。</p>
+                  <?php } ?>
 
             </td>
           </tr>

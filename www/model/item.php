@@ -96,13 +96,15 @@ function update_item_status($db, $item_id, $status){
     UPDATE
       items
     SET
-      status = {$status}
+      status = ?
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
   
-  return execute_query($db, $sql);
+  $array = array($status, $item_id);
+
+  return execute_query($db, $sql, $array);
 }
 
 function update_item_stock($db, $item_id, $stock){
@@ -115,8 +117,10 @@ function update_item_stock($db, $item_id, $stock){
       item_id = ?
     LIMIT 1
   ";
+
   $array=array($stock, $item_id);
   return execute_query($db, $sql, $array);
+
 }
 
 function destroy_item($db, $item_id){
@@ -139,11 +143,13 @@ function delete_item($db, $item_id){
     DELETE FROM
       items
     WHERE
-      item_id = {$item_id}
+      item_id = ?
     LIMIT 1
   ";
+
+  $array = array($item_id);
   
-  return execute_query($db, $sql);
+  return execute_query($db, $sql, $array);
 }
 
 
@@ -214,6 +220,7 @@ function get_ranking($db){
   $sql = "SELECT
   a.item_id,
   a.name,
+  a.stock,
   a.price,
   a.image,
   sum(b.item_amount)
