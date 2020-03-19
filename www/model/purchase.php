@@ -79,6 +79,7 @@ function get_all_purchase_history($db, $user_id)
 
     $sql = "SELECT *
     FROM purchase_history
+    ORDER BY purchase_datetime DESC
     ";
 
     return fetch_all_query($db, $sql);

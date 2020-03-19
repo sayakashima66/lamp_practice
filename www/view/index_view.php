@@ -15,7 +15,6 @@
   <div class="container">
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
-    <?php var_dump($ranking); ?>
     <div class="card-deck">
       <div class="row">
         <?php foreach ($items as $item) { ?>
