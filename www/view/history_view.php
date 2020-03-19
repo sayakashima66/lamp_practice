@@ -41,6 +41,7 @@
                   <input type="hidden" value="<?php print($value['purchase_id']); ?>" name="purchase_id">
                   <input type="hidden" value="<?php print($value['total_price']); ?>" name="total_price">
                   <input type="hidden" value="<?php print($value['purchase_datetime']); ?>" name="purchase_datetime">
+                  <input type="hidden" value="<?php print($token); ?>" name="token">
                   <input type="submit" value="詳細">
                 </form>
               </td>

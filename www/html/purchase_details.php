@@ -21,6 +21,12 @@ $total_price = $_POST['total_price'];
 $purchase_datetime = $_POST['purchase_datetime'];
 
 $purchase_details = get_purchase_details($db, $purchase_id);
+$get_token = get_post('token');
+
+if(is_valid_csrf_token($get_token)!==true){
+  set_error('トークンが不正です');
+  redirect_to(HISTORY_URL);
+}
 
 
 

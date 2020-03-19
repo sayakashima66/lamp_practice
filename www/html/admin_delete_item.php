@@ -18,6 +18,12 @@ if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
 
+$get_token = get_post('token');
+if(is_valid_csrf_token($get_token)!==true){
+  set_error('トークンが不正です');
+  redirect_to(ADMIN_URL);
+}
+
 $item_id = get_post('item_id');
 
 

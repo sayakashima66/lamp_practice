@@ -16,6 +16,8 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 $user_id = $user['user_id'];
+$token = get_csrf_token();
+
 
 if (is_admin($user) === true){
   $purchase_items = get_all_purchase_history($db, $user_id);

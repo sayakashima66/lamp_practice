@@ -15,6 +15,12 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
+$get_token = get_post('token');
+if(is_valid_csrf_token($get_token)!==true){
+  set_error('トークンが不正です');
+  redirect_to(CART_URL);
+}
+
 $carts = get_user_carts($db, $user['user_id']);
 
 if(purchase_carts($db, $carts) === false){
