@@ -16,12 +16,12 @@ $user = get_login_user($db);
 
 
 $item_id = get_post('item_id');
-$token = get_post('token');
+$get_token = get_post('token');
 
-if (is_valid_csrf_token($token) === true) {
+if (is_valid_csrf_token($get_token) === true) {
 
   if (add_cart($db, $user['user_id'], $item_id)) {
-    set_message('カートに商品を追加しました！');
+    set_message('カートに商品を追加しました。');
   } else {
     set_error('カートの更新に失敗しました。');
   }

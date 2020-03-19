@@ -2,6 +2,7 @@
 require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'db.php';
 
+//ユーザidからid, name, password, typeを取得する関数
 function get_user($db, $user_id){
   $sql = "
     SELECT
@@ -19,6 +20,7 @@ function get_user($db, $user_id){
   return fetch_query($db, $sql);
 }
 
+//ユーザ名からid, password, typeを取得する関数
 function get_user_by_name($db, $name){
   $sql = "
     SELECT
@@ -37,10 +39,15 @@ function get_user_by_name($db, $name){
 }
 
 function login_as($db, $name, $password){
+  //入力されたユーザ名からユーザ情報を配列で取得
   $user = get_user_by_name($db, $name);
+
+  //配列の取得に失敗した場合($userがfalse)orパスワードが一致しない場合はfalseを返す
   if($user === false || $user['password'] !== $password){
     return false;
   }
+
+  //問題なかった場合、セッションにuser_idを格納→$userを返す
   set_session('user_id', $user['user_id']);
   return $user;
 }

@@ -14,9 +14,9 @@ $password = get_post('password');
 
 $db = get_db_connect();
 
-$token = get_csrf_token();
+$get_token = get_post('token');
 
-
+if(is_valid_csrf_token($get_token)===true){
 $user = login_as($db, $name, $password);
 if( $user === false){
   set_error('ログインに失敗しました。');
@@ -24,7 +24,12 @@ if( $user === false){
 }
 
 set_message('ログインしました。');
+
 if ($user['type'] === USER_TYPE_ADMIN){
   redirect_to(ADMIN_URL);
 }
 redirect_to(HOME_URL);
+}else{
+  set_error('トークンが不正です');
+  redirect_to(LOGIN_URL);
+}

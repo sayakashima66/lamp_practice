@@ -12,9 +12,11 @@ if(is_logined() === true){
 $name = get_post('name');
 $password = get_post('password');
 $password_confirmation = get_post('password_confirmation');
+$get_token = get_post('token');
 
 $db = get_db_connect();
 
+if (is_valid_csrf_token($get_token)===true){
 try{
   $result = regist_user($db, $name, $password, $password_confirmation);
   if( $result=== false){
@@ -27,5 +29,11 @@ try{
 }
 
 set_message('ユーザー登録が完了しました。');
-login_as($db, $name, $password);
+login_as($db, $name, $password, $token);
+
+
 redirect_to(HOME_URL);
+}else{
+  set_error('トークンが不正です');
+  redirect_to(SIGNUP_URL);
+}
